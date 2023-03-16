@@ -1,0 +1,67 @@
+<html>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+      margin: 0;
+      padding: 16px;
+      background-color: var(--figma-color-bg);
+      color: var(--figma-color-text);
+      display: grid;
+      grid-template-rows: auto 36px;
+      gap: 8px;
+    }
+
+    #info {
+      margin-bottom: 16px;
+    }
+
+    button {
+      background-color: var(--figma-color-bg-brand);
+      border: none;
+      border-radius: 4px;
+      color: var(--figma-color-icon-onbrand);
+      cursor: pointer;
+      font-size: 14px;
+      padding: 8px 16px;
+    }
+
+    button:hover {
+      background-color: var(--figma-color-bg-brand-hover);
+    }
+
+    .classes {
+      padding: 8px;
+      background-color: var(--figma-color-bg-secondary);
+      border: 1px solid var(--figma-color-border);
+      min-height: 120px;
+      font-family: monospace;
+      font-weight: medium;
+      font-size: 14px;
+    }
+  </style>
+  <body>
+    <div id="info" class="classes">Please select an object</div>
+    <button id="copy">Copy</button>
+
+    <script>
+      const info = document.querySelector("#info");
+      const copyButton = document.querySelector("#copy");
+
+      copyButton.addEventListener("click", () => {
+        const tailwindClasses = info.textContent;
+        if (tailwindClasses) {
+          navigator.clipboard.writeText(tailwindClasses);
+        }
+      });
+
+      onmessage = (event) => {
+        const tailwindClasses = event.data.pluginMessage;
+        if (tailwindClasses) {
+          info.textContent = tailwindClasses;
+        } else {
+          info.textContent = "Please select an object";
+        }
+      };
+    </script>
+  </body>
+</html>
