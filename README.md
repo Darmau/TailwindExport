@@ -18,7 +18,7 @@ To use the plugin, follow these simple steps:
 
 ## License
 
-Tailwind Export is released under the MIT License.
+Tailwind Export is released under the GNU License.
 
 ## Future Features
 
