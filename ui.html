@@ -37,6 +37,7 @@
       font-family: monospace;
       font-weight: medium;
       font-size: 14px;
+      overflow-y: scroll;
     }
   </style>
   <body>
@@ -47,10 +48,21 @@
       const info = document.querySelector("#info");
       const copyButton = document.querySelector("#copy");
 
-      copyButton.addEventListener("click", () => {
-        const tailwindClasses = info.textContent;
-        if (tailwindClasses) {
-          navigator.clipboard.writeText(tailwindClasses);
+      copyButton.addEventListener("click", async function () {
+        const tailwindClasses = info.innerText;
+        try {
+          if (navigator.clipboard) {
+            await navigator.clipboard.writeText(tailwindClasses);
+          } else {
+            const input = document.createElement("textarea");
+            input.value = tailwindClasses;
+            document.body.appendChild(input);
+            input.select();
+            document.execCommand("copy");
+            document.body.removeChild(input);
+          }
+        } catch (error) {
+          console.error("Failed to copy: ", error);
         }
       });
 
